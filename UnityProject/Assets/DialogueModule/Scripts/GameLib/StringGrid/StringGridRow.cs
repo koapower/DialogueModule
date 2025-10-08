@@ -55,5 +55,10 @@ namespace DialogueModule
         {
             return strings != null && strings.Length > 0 && strings[0].StartsWith("//");
         }
+
+        public override string ToString()
+        {
+            return string.Join(",", strings);
+        }
     }
 }

@@ -1,18 +1,29 @@
-using System.Collections;
+using System;
 using UnityEngine;
 
 namespace DialogueModule
 {
-    [AddComponentMenu("Dialogue System/Dialogue Engine")]
+    [AddComponentMenu("Dialogue Module/Dialogue Engine")]
     public class DialogueEngine : MonoBehaviour
     {
+        public event Action onUIStart;
         internal DataManager dataManager => GetComponent<DataManager>();
+        internal ScenarioManager scenarioManager => GetComponent<ScenarioManager>();
+        public bool isLoading => scenarioManager.isLoading;
 
-        IEnumerator Init()
+        public void Init()
         {
             dataManager.Init();
-            yield return null;
         }
 
+        public void StartDialogue(string label)
+        {
+            onUIStart?.Invoke();
+            if (label.Length > 1 && label[0] == '*')
+            {
+                label = label.Substring(1);
+            }
+            scenarioManager.StartScenario(label);
+        }
     }
 }

@@ -49,6 +49,7 @@ namespace DialogueModule
         }
 
         public IEnumerable<string> Keys => keys;
+        public IReadOnlyList<StringGrid> Values => values;
         public int Count => keys.Count;
     }
 }
