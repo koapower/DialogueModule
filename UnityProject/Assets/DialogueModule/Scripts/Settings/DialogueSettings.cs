@@ -12,8 +12,8 @@ public class DialogueSettings : ScriptableObject
     [Tooltip("Where to save the generated ScenarioBook asset")]
     public string outputPath = "Assets/DialogueModule/Data/ScenarioBook.asset";
 
-    [Tooltip("Where to save the generated DataBook asset")]
-    public string dataBookOutputPath = "Assets/DialogueModule/Data/DataBook.asset";
+    [Tooltip("Where to save the generated SettingsBook asset")]
+    public string settingsBookOutputPath = "Assets/DialogueModule/Data/SettingsBook.asset";
 
     [Header("CSV Parser Settings")]
     public char delimiter = ',';

@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c128949b6315786458bb1b322cfa66d5, type: 3}
   m_Name: DialogueSettings
   m_EditorClassIdentifier: Assembly-CSharp::DialogueSettings
-  csvFolderPaths: []
+  csvFolderPaths:
+  - Csv
   outputPath: Assets/DialogueModule/Data/ScenarioBook.asset
-  dataBookOutputPath: Assets/DialogueModule/Data/DataBook.asset
+  settingsBookOutputPath: Assets/DialogueModule/Data/SettingsBook.asset
   delimiter: 44

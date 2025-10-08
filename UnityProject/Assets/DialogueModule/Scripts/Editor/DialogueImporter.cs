@@ -23,7 +23,7 @@ public class DialogueImporter
         }
 
         ScenarioBook scenarioBook = LoadOrCreateScenarioBook(settings.outputPath);
-        DataBook dataBook = LoadOrCreateDataBook(settings.dataBookOutputPath);
+        SettingsBook settingsBook = LoadOrCreateSettingsBook(settings.settingsBookOutputPath);
         StringGridDictionary allScenarios = new StringGridDictionary();
         StringGridDictionary allCharacters = new StringGridDictionary();
         StringGridDictionary allLayers = new StringGridDictionary();
@@ -74,14 +74,14 @@ public class DialogueImporter
         }
 
         scenarioBook.SetScenarioData(allScenarios);
-        dataBook.SetCharacterData(allCharacters);
-        dataBook.SetLayerData(allLayers);
+        settingsBook.SetSettings("Character", allCharacters);
+        settingsBook.SetSettings("Layer", allLayers);
         EditorUtility.SetDirty(scenarioBook);
-        EditorUtility.SetDirty(dataBook);
+        EditorUtility.SetDirty(settingsBook);
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
 
-        Debug.Log($"Dialogue assets updated successfully! Processed {successFiles}/{totalFiles} files. Scenarios: {scenarioBook.ScenarioCount}, Characters: {dataBook.CharacterCount}, Layers: {dataBook.LayerCount}");
+        Debug.Log($"Dialogue assets updated successfully! Processed {successFiles}/{totalFiles} files. Scenarios: {scenarioBook.ScenarioCount}, Characters: {settingsBook.GetSettingsCount("Character")}, Layers: {settingsBook.GetSettingsCount("Layer")}");
     }
 
     private static DialogueSettings LoadSettings()
@@ -124,13 +124,13 @@ public class DialogueImporter
         return book;
     }
 
-    private static DataBook LoadOrCreateDataBook(string path)
+    private static SettingsBook LoadOrCreateSettingsBook(string path)
     {
-        DataBook book = AssetDatabase.LoadAssetAtPath<DataBook>(path);
+        SettingsBook book = AssetDatabase.LoadAssetAtPath<SettingsBook>(path);
 
         if (book == null)
         {
-            book = ScriptableObject.CreateInstance<DataBook>();
+            book = ScriptableObject.CreateInstance<SettingsBook>();
 
             // Ensure directory exists
             string directory = Path.GetDirectoryName(path);
