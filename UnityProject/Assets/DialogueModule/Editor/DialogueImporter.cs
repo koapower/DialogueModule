@@ -23,7 +23,9 @@ public class DialogueImporter
         }
 
         ScenarioBook scenarioBook = LoadOrCreateScenarioBook(settings.outputPath);
+        DataBook dataBook = LoadOrCreateDataBook(settings.dataBookOutputPath);
         StringGridDictionary allScenarios = new StringGridDictionary();
+        StringGridDictionary allCharacters = new StringGridDictionary();
         ScenarioFileReaderCsv reader = new ScenarioFileReaderCsv();
 
         int totalFiles = 0;
@@ -51,7 +53,14 @@ public class DialogueImporter
                     {
                         if (gridDict.TryGetValue(key, out StringGrid grid))
                         {
-                            allScenarios.Add(key, grid);
+                            if (key == "Character")
+                            {
+                                allCharacters.Add(key, grid);
+                            }
+                            else
+                            {
+                                allScenarios.Add(key, grid);
+                            }
                             successFiles++;
                         }
                     }
@@ -60,11 +69,13 @@ public class DialogueImporter
         }
 
         scenarioBook.SetScenarioData(allScenarios);
+        dataBook.SetCharacterData(allCharacters);
         EditorUtility.SetDirty(scenarioBook);
+        EditorUtility.SetDirty(dataBook);
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
 
-        Debug.Log($"Dialogue assets updated successfully! Processed {successFiles}/{totalFiles} files. Total scenarios: {scenarioBook.ScenarioCount}");
+        Debug.Log($"Dialogue assets updated successfully! Processed {successFiles}/{totalFiles} files. Scenarios: {scenarioBook.ScenarioCount}, Characters: {dataBook.CharacterCount}");
     }
 
     private static DialogueSettings LoadSettings()
@@ -92,6 +103,28 @@ public class DialogueImporter
         if (book == null)
         {
             book = ScriptableObject.CreateInstance<ScenarioBook>();
+
+            // Ensure directory exists
+            string directory = Path.GetDirectoryName(path);
+            if (!Directory.Exists(directory))
+            {
+                Directory.CreateDirectory(directory);
+            }
+
+            AssetDatabase.CreateAsset(book, path);
+            AssetDatabase.SaveAssets();
+        }
+
+        return book;
+    }
+
+    private static DataBook LoadOrCreateDataBook(string path)
+    {
+        DataBook book = AssetDatabase.LoadAssetAtPath<DataBook>(path);
+
+        if (book == null)
+        {
+            book = ScriptableObject.CreateInstance<DataBook>();
 
             // Ensure directory exists
             string directory = Path.GetDirectoryName(path);
