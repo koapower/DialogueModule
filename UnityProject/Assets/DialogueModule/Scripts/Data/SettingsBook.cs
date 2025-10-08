@@ -1,9 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "SettingsBook", menuName = "Dialogue/Settings Book")]
-public class SettingsBook : ScriptableObject
+namespace DialogueModule
 {
+    [CreateAssetMenu(fileName = "SettingsBook", menuName = "Dialogue/Settings Book")]
+    public class SettingsBook : ScriptableObject
+    {
     [SerializeField]
     private Dictionary<string, StringGridDictionary> settings = new Dictionary<string, StringGridDictionary>();
 
@@ -39,4 +41,5 @@ public class SettingsBook : ScriptableObject
     }
 
     public int TotalSettingsTypes => settings.Count;
+    }
 }

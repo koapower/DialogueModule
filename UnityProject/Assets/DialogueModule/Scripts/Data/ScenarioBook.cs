@@ -1,22 +1,25 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "ScenarioBook", menuName = "Dialogue/Scenario Book")]
-public class ScenarioBook : ScriptableObject
+namespace DialogueModule
 {
-    [SerializeField]
-    private StringGridDictionary scenarioData = new StringGridDictionary();
-
-    public StringGridDictionary ScenarioData => scenarioData;
-
-    public void SetScenarioData(StringGridDictionary data)
+    [CreateAssetMenu(fileName = "ScenarioBook", menuName = "Dialogue/Scenario Book")]
+    public class ScenarioBook : ScriptableObject
     {
-        scenarioData = data;
-    }
+        [SerializeField]
+        private StringGridDictionary scenarioData = new StringGridDictionary();
 
-    public bool TryGetScenario(string scenarioName, out StringGrid grid)
-    {
-        return scenarioData.TryGetValue(scenarioName, out grid);
-    }
+        public StringGridDictionary ScenarioData => scenarioData;
 
-    public int ScenarioCount => scenarioData.Count;
+        public void SetScenarioData(StringGridDictionary data)
+        {
+            scenarioData = data;
+        }
+
+        public bool TryGetScenario(string scenarioName, out StringGrid grid)
+        {
+            return scenarioData.TryGetValue(scenarioName, out grid);
+        }
+
+        public int ScenarioCount => scenarioData.Count;
+    }
 }

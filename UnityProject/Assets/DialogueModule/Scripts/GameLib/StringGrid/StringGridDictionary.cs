@@ -1,51 +1,54 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class StringGridDictionary
+namespace DialogueModule
 {
-    [SerializeField]
-    private List<string> keys = new List<string>();
-
-    [SerializeField]
-    private List<StringGrid> values = new List<StringGrid>();
-
-    public Dictionary<string, StringGrid> ToDictionary()
+    [System.Serializable]
+    public class StringGridDictionary
     {
-        var dict = new Dictionary<string, StringGrid>();
-        for (int i = 0; i < keys.Count && i < values.Count; i++)
-        {
-            dict[keys[i]] = values[i];
-        }
-        return dict;
-    }
+        [SerializeField]
+        private List<string> keys = new List<string>();
 
-    public void Add(string key, StringGrid grid)
-    {
-        int index = keys.IndexOf(key);
-        if (index >= 0)
-        {
-            values[index] = grid;
-        }
-        else
-        {
-            keys.Add(key);
-            values.Add(grid);
-        }
-    }
+        [SerializeField]
+        private List<StringGrid> values = new List<StringGrid>();
 
-    public bool TryGetValue(string key, out StringGrid grid)
-    {
-        int index = keys.IndexOf(key);
-        if (index >= 0)
+        public Dictionary<string, StringGrid> ToDictionary()
         {
-            grid = values[index];
-            return true;
+            var dict = new Dictionary<string, StringGrid>();
+            for (int i = 0; i < keys.Count && i < values.Count; i++)
+            {
+                dict[keys[i]] = values[i];
+            }
+            return dict;
         }
-        grid = null;
-        return false;
-    }
 
-    public IEnumerable<string> Keys => keys;
-    public int Count => keys.Count;
+        public void Add(string key, StringGrid grid)
+        {
+            int index = keys.IndexOf(key);
+            if (index >= 0)
+            {
+                values[index] = grid;
+            }
+            else
+            {
+                keys.Add(key);
+                values.Add(grid);
+            }
+        }
+
+        public bool TryGetValue(string key, out StringGrid grid)
+        {
+            int index = keys.IndexOf(key);
+            if (index >= 0)
+            {
+                grid = values[index];
+                return true;
+            }
+            grid = null;
+            return false;
+        }
+
+        public IEnumerable<string> Keys => keys;
+        public int Count => keys.Count;
+    }
 }

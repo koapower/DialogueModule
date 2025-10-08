@@ -1,45 +1,48 @@
 using System.IO;
 using UnityEngine;
 
-public class ScenarioFileReaderCsv : IScenarioFileReader
+namespace DialogueModule
 {
-    private CsvParser csvParser = new CsvParser();
-
-    public bool TryReadFile(string path, out StringGridDictionary stringGridDictionary)
+    public class ScenarioFileReaderCsv : IScenarioFileReader
     {
-        stringGridDictionary = new StringGridDictionary();
+        private CsvParser csvParser = new CsvParser();
 
-        if (!File.Exists(path))
+        public bool TryReadFile(string path, out StringGridDictionary stringGridDictionary)
         {
-            Debug.LogError($"CSV file not found: {path}");
-            return false;
-        }
+            stringGridDictionary = new StringGridDictionary();
 
-        try
-        {
-            var csvData = csvParser.ReadFile(path);
-            if (csvData == null || csvData.Count == 0)
+            if (!File.Exists(path))
             {
-                Debug.LogWarning($"Empty or invalid CSV file: {path}");
+                Debug.LogError($"CSV file not found: {path}");
                 return false;
             }
 
-            string sheetName = Path.GetFileNameWithoutExtension(path);
-            var grid = new StringGrid(sheetName);
-
-            foreach (var rowData in csvData)
+            try
             {
-                var row = new StringGridRow(rowData);
-                grid.AddRow(row);
-            }
+                var csvData = csvParser.ReadFile(path);
+                if (csvData == null || csvData.Count == 0)
+                {
+                    Debug.LogWarning($"Empty or invalid CSV file: {path}");
+                    return false;
+                }
 
-            stringGridDictionary.Add(sheetName, grid);
-            return true;
-        }
-        catch (System.Exception e)
-        {
-            Debug.LogError($"Failed to read CSV file {path}: {e.Message}");
-            return false;
+                string sheetName = Path.GetFileNameWithoutExtension(path);
+                var grid = new StringGrid(sheetName);
+
+                foreach (var rowData in csvData)
+                {
+                    var row = new StringGridRow(rowData);
+                    grid.AddRow(row);
+                }
+
+                stringGridDictionary.Add(sheetName, grid);
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError($"Failed to read CSV file {path}: {e.Message}");
+                return false;
+            }
         }
     }
 }
