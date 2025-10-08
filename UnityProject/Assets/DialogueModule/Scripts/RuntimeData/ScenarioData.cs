@@ -13,7 +13,7 @@ namespace DialogueModule
 
         public void Init()
         {
-
+            // parse commands
         }
     }
 }
