@@ -26,6 +26,7 @@ public class DialogueImporter
         DataBook dataBook = LoadOrCreateDataBook(settings.dataBookOutputPath);
         StringGridDictionary allScenarios = new StringGridDictionary();
         StringGridDictionary allCharacters = new StringGridDictionary();
+        StringGridDictionary allLayers = new StringGridDictionary();
         ScenarioFileReaderCsv reader = new ScenarioFileReaderCsv();
 
         int totalFiles = 0;
@@ -57,6 +58,10 @@ public class DialogueImporter
                             {
                                 allCharacters.Add(key, grid);
                             }
+                            else if (key == "Layer")
+                            {
+                                allLayers.Add(key, grid);
+                            }
                             else
                             {
                                 allScenarios.Add(key, grid);
@@ -70,12 +75,13 @@ public class DialogueImporter
 
         scenarioBook.SetScenarioData(allScenarios);
         dataBook.SetCharacterData(allCharacters);
+        dataBook.SetLayerData(allLayers);
         EditorUtility.SetDirty(scenarioBook);
         EditorUtility.SetDirty(dataBook);
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
 
-        Debug.Log($"Dialogue assets updated successfully! Processed {successFiles}/{totalFiles} files. Scenarios: {scenarioBook.ScenarioCount}, Characters: {dataBook.CharacterCount}");
+        Debug.Log($"Dialogue assets updated successfully! Processed {successFiles}/{totalFiles} files. Scenarios: {scenarioBook.ScenarioCount}, Characters: {dataBook.CharacterCount}, Layers: {dataBook.LayerCount}");
     }
 
     private static DialogueSettings LoadSettings()

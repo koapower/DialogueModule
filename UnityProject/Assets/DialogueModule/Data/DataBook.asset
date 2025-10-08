@@ -55,3 +55,32 @@ MonoBehaviour:
       - strings:
         - ido
         - Ido
+  layerData:
+    keys:
+    - Layer
+    values:
+    - rows:
+      - strings:
+        - LayerName
+        - Type
+        - X
+        - Y
+        - Order
+      - strings:
+        - charL
+        - Character
+        - -250
+        - 0
+        - 190
+      - strings:
+        - charM
+        - Character
+        - 0
+        - 0
+        - 200
+      - strings:
+        - charR
+        - Character
+        - 250
+        - 0
+        - 190
