@@ -13,5 +13,7 @@ namespace DialogueModule
         {
             settingDataManager.Init(settingsBook);
         }
+
+
     }
 }
