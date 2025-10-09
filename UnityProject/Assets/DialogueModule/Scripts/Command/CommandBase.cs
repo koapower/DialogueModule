@@ -2,10 +2,12 @@ namespace DialogueModule
 {
     public abstract class CommandBase
     {
-        public StringGridRow rowData { get; set; }
+        public readonly CommandID id;
+        public readonly StringGridRow rowData;
 
-        protected CommandBase(StringGridRow row)
+        protected CommandBase(CommandID id, StringGridRow row)
         {
+            this.id = id;
             this.rowData = row;
         }
 

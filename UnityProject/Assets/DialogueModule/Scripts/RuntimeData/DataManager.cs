@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace DialogueModule
@@ -8,12 +9,22 @@ namespace DialogueModule
         [SerializeField] private ScenarioBook scenarioBook;
 
         SettingDataManager settingDataManager = new SettingDataManager();
+        Dictionary<string, ScenarioData> scenarioDataDict = new Dictionary<string, ScenarioData>();
 
         public void Init()
         {
             settingDataManager.Init(settingsBook);
+            InitScenarios();
         }
 
-
+        private void InitScenarios()
+        {
+            scenarioDataDict.Clear();
+            foreach (var grid in scenarioBook.ScenarioData.Values)
+            {
+                var scenarioData = new ScenarioData(grid);
+                scenarioDataDict[grid.Name] = scenarioData;
+            }            
+        }
     }
 }

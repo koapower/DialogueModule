@@ -12,3 +12,77 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67a0b7577a12f2f42bf8dc73927b0ecf, type: 3}
   m_Name: SettingsBook
   m_EditorClassIdentifier: Assembly-CSharp::SettingsBook
+  keys:
+  - Character
+  - Layer
+  settings:
+  - keys:
+    - Character
+    values:
+    - rows:
+      - strings:
+        - CharacterName
+        - DisplayName
+        - X
+        - Y
+        - Scale
+        - FileName
+      - strings:
+        - butcher
+        - Modrek
+        - 
+        - 
+        - 
+        - butcher.png
+      - strings:
+        - elder
+        - Gamlo
+        - 
+        - 
+        - 
+        - elder.png
+      - strings:
+        - farmerwoman
+        - Mira
+        - 
+        - 
+        - 
+        - farmerwoman.png
+      - strings:
+        - satan
+        - Satan
+        - 
+        - 
+        - 
+        - satan.png
+      - strings:
+        - ido
+        - Ido
+  - keys:
+    - Layer
+    values:
+    - rows:
+      - strings:
+        - LayerName
+        - Type
+        - X
+        - Y
+        - Order
+      - strings:
+        - charL
+        - Character
+        - -250
+        - 0
+        - 190
+      - strings:
+        - charM
+        - Character
+        - 0
+        - 0
+        - 200
+      - strings:
+        - charR
+        - Character
+        - 250
+        - 0
+        - 190

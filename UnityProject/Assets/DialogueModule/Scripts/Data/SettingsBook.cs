@@ -6,24 +6,35 @@ namespace DialogueModule
     [CreateAssetMenu(fileName = "SettingsBook", menuName = "Dialogue/Settings Book")]
     public class SettingsBook : ScriptableObject
     {
+        //doing this for unity serialization
         [SerializeField]
-        private Dictionary<string, StringGridDictionary> settings = new Dictionary<string, StringGridDictionary>();
+        private List<string> keys = new List<string>();
+        [SerializeField]
+        private List<StringGridDictionary> settings = new List<StringGridDictionary>();
 
         public void SetSettings(string key, StringGridDictionary data)
         {
-            if (settings.ContainsKey(key))
+            var index = keys.IndexOf(key);
+            if (index >= 0)
             {
-                settings[key] = data;
+                settings[index] = data;
             }
             else
             {
-                settings.Add(key, data);
+                keys.Add(key);
+                settings.Add(data);
             }
         }
 
         public bool TryGetSettings(string key, out StringGridDictionary data)
         {
-            return settings.TryGetValue(key, out data);
+            var index = keys.IndexOf(key);
+            if (index >= 0)
+                data = settings[index];
+            else
+                data = null;
+
+            return data != null;
         }
 
         public void ClearSettings()
@@ -33,7 +44,7 @@ namespace DialogueModule
 
         public int GetSettingsCount(string key)
         {
-            if (settings.TryGetValue(key, out StringGridDictionary data))
+            if (TryGetSettings(key, out StringGridDictionary data))
             {
                 return data.Count;
             }

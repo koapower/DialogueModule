@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace DialogueModule
@@ -33,6 +34,38 @@ namespace DialogueModule
         public void Clear()
         {
             rows.Clear();
+        }
+
+        public int GetCoulumnIndex(string columnName)
+        {
+            var header = GetHeaderRow();
+            for (int i = 0; i < header.Length; i++)
+            {
+                var cell = header.GetCell(i);
+                if (cell == columnName)
+                    return i;
+            }
+            return -1;
+        }
+
+        public StringGridRow GetHeaderRow()
+        {
+            var row = rows[0];
+            return row;
+        }
+
+        public int GetFirstDataRowIndex()
+        {
+            if (rows.Count < 2)
+                return -1;
+            var index = rows.FindIndex(1, x => !x.IsEmpty && !x.IsCommentOut);
+            return index;
+        }
+
+        public GridInfo CreateGridInfo()
+        {
+            var info = new GridInfo(this);
+            return info;
         }
     }
 }

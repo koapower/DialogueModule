@@ -35,17 +35,6 @@ namespace DialogueModule
             return strings[index];
         }
 
-        public bool TryGetCell(int index, out string value)
-        {
-            if (index >= 0 && index < strings.Length)
-            {
-                value = strings[index];
-                return true;
-            }
-            value = string.Empty;
-            return false;
-        }
-
         bool CheckIsEmpty()
         {
             return strings == null || !strings.Any(s => !string.IsNullOrEmpty(s));

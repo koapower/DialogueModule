@@ -11,6 +11,12 @@ namespace DialogueModule
         internal ScenarioManager scenarioManager => GetComponent<ScenarioManager>();
         public bool isLoading => scenarioManager.isLoading;
 
+        private void Awake()
+        {
+            //debug
+            Init();
+        }
+
         public void Init()
         {
             dataManager.Init();

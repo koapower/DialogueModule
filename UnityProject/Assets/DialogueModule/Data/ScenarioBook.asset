@@ -195,6 +195,8 @@ MonoBehaviour:
         - If there is no name specified for CharacterOff, every character will be
           removed from screen.
       - strings:
+        - EndScenario
+      - strings:
         - 
       - strings:
         - '*story_test3'

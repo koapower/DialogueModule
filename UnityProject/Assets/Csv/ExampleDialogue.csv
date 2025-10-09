@@ -22,6 +22,7 @@ CharacterOff,farmerwoman
 ,,,,,,,"Use CharacterOff command to remove character on screen, specify name of character will only remove the specified character."
 CharacterOff
 ,,,,,,,"If there is no name specified for CharacterOff, every character will be removed from screen."
+EndScenario
 
 *story_test3
 ,,,,,,,Sample dialogue for testing
