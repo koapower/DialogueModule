@@ -12,7 +12,7 @@ namespace DialogueModule
                 fadeTime = 0.2f;
         }
 
-        public override void Execute()
+        public override void Execute(DialogueEngine engine)
         {
             //todo
         }

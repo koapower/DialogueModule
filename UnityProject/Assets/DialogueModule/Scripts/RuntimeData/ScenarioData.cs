@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace DialogueModule
@@ -11,6 +9,7 @@ namespace DialogueModule
         public StringGrid grid { get; private set; }
         private List<CommandBase> commandList = new List<CommandBase>();
         private Dictionary<string, LabelData> scenarioLabelDict = new Dictionary<string, LabelData>();
+        public IReadOnlyDictionary<string, LabelData> ScenarioLabelDict => scenarioLabelDict;
 
         public ScenarioData(StringGrid grid)
         {

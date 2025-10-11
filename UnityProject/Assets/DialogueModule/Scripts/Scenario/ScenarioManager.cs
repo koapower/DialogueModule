@@ -16,8 +16,35 @@ namespace DialogueModule
         {
             ClearMainPlayer();
             CreateMainPlayer();
+            var labelData = GetComponent<DataManager>().GetLabelData(label);
+            if (labelData == null)
+            {
+                Debug.LogError($"can't find labelData for label {label}!");
+                return;
+            }
             onBeginScenario?.Invoke();
-            mainPlayer.StartScenario(label);
+            mainPlayer.StartScenario(labelData);
+        }
+
+        internal void EndScenario()
+        {
+            onEndScenario?.Invoke();
+            onEndOrPauseScenario?.Invoke();
+            ClearMainPlayer();
+        }
+
+        internal void Pause()
+        {
+            if (mainPlayer != null)
+                mainPlayer.isPaused = true;
+            onPauseScenario?.Invoke();
+            onEndOrPauseScenario?.Invoke();
+        }
+
+        internal void Resume()
+        {
+            if (mainPlayer != null)
+                mainPlayer.isPaused = false;
         }
 
         private void ClearMainPlayer()

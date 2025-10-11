@@ -9,7 +9,7 @@ namespace DialogueModule
         {
         }
 
-        public override void Execute()
+        public override void Execute(DialogueEngine engine)
         {
 
         }

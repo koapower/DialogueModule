@@ -11,7 +11,7 @@ namespace DialogueModule
             //todo
         }
 
-        public override void Execute()
+        public override void Execute(DialogueEngine engine)
         {
             //todo
         }

@@ -24,7 +24,20 @@ namespace DialogueModule
             {
                 var scenarioData = new ScenarioData(grid);
                 scenarioDataDict[grid.Name] = scenarioData;
-            }            
+            }
+        }
+
+        public LabelData GetLabelData(string label)
+        {
+            foreach (var sData in scenarioDataDict.Values)
+            {
+                if (sData.ScenarioLabelDict.TryGetValue(label, out var labelData))
+                {
+                    return labelData;
+                }
+            }
+
+            return null;
         }
     }
 }

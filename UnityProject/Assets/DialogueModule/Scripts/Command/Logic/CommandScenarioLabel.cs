@@ -11,7 +11,7 @@ namespace DialogueModule
                 Debug.LogError($"Failed to parse scenario label from sheet name {grid.gridName}, Command column, row {row}");
         }
 
-        public override void Execute()
+        public override void Execute(DialogueEngine engine)
         {
 
         }

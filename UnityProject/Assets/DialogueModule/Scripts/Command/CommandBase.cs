@@ -4,6 +4,7 @@ namespace DialogueModule
     {
         public readonly CommandID id;
         public readonly StringGridRow rowData;
+        public bool isWaiting { get; private set; } = false;
 
         protected CommandBase(CommandID id, StringGridRow row)
         {
@@ -11,6 +12,6 @@ namespace DialogueModule
             this.rowData = row;
         }
 
-        public abstract void Execute();
+        public abstract void Execute(DialogueEngine engine);
     }
 }
