@@ -7,14 +7,16 @@ namespace DialogueModule
     {
         DialogueEngine engine;
         public LabelData currentLabelData { get; private set; }
-        LabelData nextLabel; //TODO
+        public LabelData nextLabel { get; set; }
         public bool isPlaying { get; set; }
         public bool isPaused { get; set; }
         public bool isLoading { get; private set; }
+        private CommandBase currentCommand;
 
         internal void Init(DialogueEngine engine)
         {
             this.engine = engine;
+            engine.adapter.onNextLine += OnNextLine;
         }
 
         internal void Clear()
@@ -47,9 +49,7 @@ namespace DialogueModule
             currentLabelData = labelData;
             do
             {
-                var runLabelCoroutine = StartCoroutine(StartLabelData());
-                if (runLabelCoroutine != null)
-                    yield return runLabelCoroutine;
+                yield return StartCoroutine(StartLabelData());
 
                 currentLabelData = nextLabel;
                 nextLabel = null;
@@ -62,11 +62,17 @@ namespace DialogueModule
         {
             foreach (var cmd in currentLabelData.commands)
             {
-                cmd.Execute(engine);
+                currentCommand = cmd;
+                currentCommand.Execute(engine);
                 yield return new WaitUntil(() => !isPaused);
-                yield return new WaitUntil(() => !cmd.isWaiting);
+                yield return new WaitUntil(() => !currentCommand.isWaiting);
             }
         }
 
+        void OnNextLine()
+        {
+            if (currentCommand != null)
+                currentCommand.isWaiting = false;
+        }
     }
 }

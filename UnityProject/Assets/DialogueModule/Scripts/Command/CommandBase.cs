@@ -4,7 +4,7 @@ namespace DialogueModule
     {
         public readonly CommandID id;
         public readonly StringGridRow rowData;
-        public bool isWaiting { get; private set; } = false;
+        public bool isWaiting { get; set; } = false;
 
         protected CommandBase(CommandID id, StringGridRow row)
         {
