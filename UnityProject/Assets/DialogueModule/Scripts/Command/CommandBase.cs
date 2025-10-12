@@ -13,5 +13,6 @@ namespace DialogueModule
         }
 
         public abstract void Execute(DialogueEngine engine);
+
     }
 }

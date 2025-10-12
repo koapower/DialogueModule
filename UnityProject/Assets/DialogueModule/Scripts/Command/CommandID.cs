@@ -8,6 +8,7 @@ namespace DialogueModule
         Text,
 
         Selection,
+        SelectionEnd,
         Jump,
         EndScenario,
         ScenarioLabel,

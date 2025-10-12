@@ -13,7 +13,13 @@ namespace DialogueModule
 
         public override void Execute(DialogueEngine engine)
         {
-
+            var labelData = engine.dataManager.GetLabelData(jumpLabel);
+            if(labelData == null)
+            {
+                Debug.LogError($"Failed to find jump label name: {jumpLabel}!");
+                return;
+            }
+            engine.scenarioManager.SetNextLabel(labelData);
         }
     }
 }

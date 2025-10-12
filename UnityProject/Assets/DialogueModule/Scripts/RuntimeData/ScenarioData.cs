@@ -21,6 +21,7 @@ namespace DialogueModule
         private void Init()
         {
             UpdateCommandList();
+            AddExtraCommands();
             UpdateLabelDict();
         }
 
@@ -35,6 +36,28 @@ namespace DialogueModule
                 var command = DataParser.ParseCommand(gridInfo, row);
                 if (command != null)
                     commandList.Add(command);
+            }
+        }
+
+        private void AddExtraCommands()
+        {
+            // only selection need this for now
+            if (commandList.Count == 0)
+                return;
+            var index = 0;
+            while (index < commandList.Count)
+            {
+                var curr = commandList[index];
+                if (curr is CommandSelection)
+                {
+                    var next = index + 1 >= commandList.Count ? null : commandList[index + 1];
+                    if (next is null or not CommandSelection)
+                    {
+                        commandList.Add(CommandFactory.Create(CommandID.SelectionEnd.ToStringFast(), null, null));
+                        index++;
+                    }
+                }
+                index++;
             }
         }
 

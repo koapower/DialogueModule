@@ -47,6 +47,12 @@ namespace DialogueModule
                 mainPlayer.isPaused = false;
         }
 
+        internal void SetNextLabel(LabelData labelData)
+        {
+            if (mainPlayer != null)
+                mainPlayer.nextLabel = labelData;
+        }
+
         private void ClearMainPlayer()
         {
             if (mainPlayer == null)
