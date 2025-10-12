@@ -8,11 +8,12 @@ namespace DialogueModule
         public event Action onSkipTypingText;
         public event Action onNextLine;
         public readonly ObservableValue<string> currentLine  = new ObservableValue<string>();
-        public readonly ObservableValue<string> currentGlobalCharacter  = new ObservableValue<string>();
+        public readonly CharacterAdapter characterAdapter = new CharacterAdapter();
         private ControllerStatus controllerStatus = ControllerStatus.None;
 
-        public void PlayText()
+        public void PlayText(string fullText)
         {
+            currentLine.Value = fullText;
             controllerStatus = ControllerStatus.TypingText;
             onPlayText?.Invoke();
         }

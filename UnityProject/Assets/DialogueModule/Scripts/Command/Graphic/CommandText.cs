@@ -2,18 +2,17 @@ namespace DialogueModule
 {
     class CommandText : CommandBase
     {
-        string content;
+        string textContent;
 
         public CommandText(GridInfo grid, StringGridRow row) : base(CommandID.Text, row)
         {
-            content = DataParser.GetCell(grid, row, ColumnName.Text);
+            textContent = DataParser.GetCell(grid, row, ColumnName.Text);
         }
 
         public override void Execute(DialogueEngine engine)
         {
-            engine.adapter.currentGlobalCharacter.Value = null;
-            engine.adapter.currentLine.Value = content;
-            engine.adapter.PlayText();
+            engine.adapter.characterAdapter.HideLayer("");
+            engine.adapter.PlayText(textContent);
             isWaiting = true;
         }
     }

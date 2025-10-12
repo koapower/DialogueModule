@@ -8,7 +8,7 @@ namespace DialogueModule
         [SerializeField] private SettingsBook settingsBook;
         [SerializeField] private ScenarioBook scenarioBook;
 
-        SettingDataManager settingDataManager = new SettingDataManager();
+        internal SettingDataManager settingDataManager = new SettingDataManager();
         Dictionary<string, ScenarioData> scenarioDataDict = new Dictionary<string, ScenarioData>();
 
         public void Init()
@@ -39,5 +39,6 @@ namespace DialogueModule
 
             return null;
         }
+
     }
 }
