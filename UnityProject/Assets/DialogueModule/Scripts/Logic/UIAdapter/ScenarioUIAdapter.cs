@@ -1,15 +1,15 @@
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace DialogueModule
 {
-    public class ScenarioUIAdapter
+    public class ScenarioUIAdapter : MonoBehaviour
     {
         public event Action onPlayText;
         public event Action onSkipTypingText;
         public event Action onNextLine;
-        public event Action<List<SelectionData>> onShowSelections;
+        public event Action<List<SelectionData>, Action<string>> onShowSelections;
         public readonly ObservableValue<string> currentLine = new ObservableValue<string>();
         public readonly CharacterAdapter characterAdapter = new CharacterAdapter();
         private List<SelectionData> selections = new List<SelectionData>();
@@ -48,7 +48,19 @@ namespace DialogueModule
         {
             var list = new List<SelectionData>(selections);
             selections.Clear();
-            onShowSelections?.Invoke(list);
+            onShowSelections?.Invoke(list, ChooseSelection);
+        }
+
+        public void ChooseSelection(string jumpLabel)
+        {
+            var engine = GetComponent<DialogueEngine>();
+            var labelData = engine.dataManager.GetLabelData(jumpLabel);
+            if (labelData == null)
+            {
+                Debug.LogError($"Failed to find jump label name: {jumpLabel}!");
+                return;
+            }
+            engine.scenarioManager.SetNextLabel(labelData);
         }
 
         enum ControllerStatus

@@ -9,7 +9,7 @@ namespace DialogueModule
         public event Action onUIStart;
         internal DataManager dataManager => GetComponent<DataManager>();
         internal ScenarioManager scenarioManager => GetComponent<ScenarioManager>();
-        public ScenarioUIAdapter adapter { get; private set; } = new ScenarioUIAdapter();
+        public ScenarioUIAdapter adapter => GetComponent<ScenarioUIAdapter>();
         public bool isLoading => scenarioManager.isLoading;
 
         private void Awake()

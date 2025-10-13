@@ -4,12 +4,22 @@ namespace DialogueModule
 {
     class LayerSettings
     {
+        public const string DEFAULT_LAYER_NAME = "Default Layer";
         internal IReadOnlyDictionary<string, Data> DataDict => dataDict;
         Dictionary<string, Data> dataDict = new Dictionary<string, Data>();
 
         public void Init(StringGridDictionary settings)
         {
             dataDict.Clear();
+            var defaultLayerData = new Data() 
+            {
+                layerName = DEFAULT_LAYER_NAME,
+                type = "Character",
+                x = 0,
+                y = 0,
+                order = 0,
+            };
+            dataDict.Add(string.Empty, defaultLayerData); //use string empty as key
             foreach (var grid in settings.Values)
             {
                 var headerRow = grid.GetRow(0);
@@ -69,6 +79,8 @@ namespace DialogueModule
                     }
                 }
             }
+
+            internal Data() { }
         }
     }
 }
