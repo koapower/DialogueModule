@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace DialogueModule
 {
-    class SelectionManager : MonoBehaviour
+    class SelectionManager : MonoBehaviour, IScenarioBindable
     {
         [SerializeField] private SelectionItem itemPrefab;
         private List<SelectionItem> selectionItems = new List<SelectionItem>();
@@ -12,6 +12,16 @@ namespace DialogueModule
         private void Awake()
         {
             itemPrefab.gameObject.SetActive(false);
+        }
+
+        public void BindToScenario(ScenarioUIAdapter adapter)
+        {
+            adapter.onShowSelections += UpdateItems;
+        }
+
+        public void UnbindFromScenario(ScenarioUIAdapter adapter)
+        {
+            adapter.onShowSelections -= UpdateItems;
         }
 
         private void ClearAll()
@@ -35,9 +45,12 @@ namespace DialogueModule
                 {
                     chooseAction?.Invoke(d.jumpLabel);
                     s.btn.onClick.RemoveAllListeners();
+                    ClearAll();
                 });
                 selectionItems.Add(s);
             }
         }
+
+        
     }
 }

@@ -6,7 +6,8 @@ namespace DialogueModule
 {
     public class ScenarioUIAdapter : MonoBehaviour
     {
-        public event Action onPlayText;
+        public event Action<InitData> onInit;
+        public event Action<MessageData> onPlayText;
         public event Action onSkipTypingText;
         public event Action onNextLine;
         public event Action<List<SelectionData>, Action<string>> onShowSelections;
@@ -15,11 +16,16 @@ namespace DialogueModule
         private List<SelectionData> selections = new List<SelectionData>();
         private ControllerStatus controllerStatus = ControllerStatus.None;
 
-        public void PlayText(string fullText)
+        public void Init(InitData initData)
+        {
+            onInit?.Invoke(initData);
+        }
+
+        public void PlayText(string characterDisplayName, string fullText)
         {
             currentLine.Value = fullText;
             controllerStatus = ControllerStatus.TypingText;
-            onPlayText?.Invoke();
+            onPlayText?.Invoke(new MessageData() { name = characterDisplayName, message = fullText });
         }
 
         public void PlayTextEnd()

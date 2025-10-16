@@ -12,7 +12,7 @@ namespace DialogueModule
         public override void Execute(DialogueEngine engine)
         {
             engine.adapter.characterAdapter.HideLayer("");
-            engine.adapter.PlayText(textContent);
+            engine.adapter.PlayText("", textContent);
             isWaiting = true;
         }
     }

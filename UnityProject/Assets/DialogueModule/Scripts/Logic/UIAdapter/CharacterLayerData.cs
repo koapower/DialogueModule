@@ -5,25 +5,24 @@ namespace DialogueModule
     public class CharacterLayerData
     {
         public string LayerName { get; set; }
-        public string CharacterId { get; set; }
-        public string DisplayName { get; set; }
+        public CharacterSettingData SettingData { get; set; }
         public Sprite Sprite { get; set; }
 
         public string Expression { get; set; }
         public Vector2 Position { get; set; }
         public float Alpha { get; set; } = 1f;
 
-        public CharacterLayerData(string layerName, string characterId, string displayName, Sprite sprite)
+        public CharacterLayerData(string layerName, CharacterSettingData settingData, Sprite sprite)
         {
             LayerName = layerName;
-            CharacterId = characterId;
-            DisplayName = displayName;
+            SettingData = settingData;
             Sprite = sprite;
+            Position = new Vector2(settingData.x, settingData.y);
         }
 
         public CharacterLayerData Clone()
         {
-            return new CharacterLayerData(LayerName, CharacterId, DisplayName, Sprite)
+            return new CharacterLayerData(LayerName, SettingData, Sprite)
             {
                 Expression = Expression,
                 Position = Position,

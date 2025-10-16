@@ -8,7 +8,6 @@ namespace DialogueModule
     {
         Show,
         Hide,
-        Update,
     }
 
     public class CharacterLayerEvent
@@ -29,14 +28,14 @@ namespace DialogueModule
 
         private readonly Dictionary<string, CharacterLayerData> _layers = new Dictionary<string, CharacterLayerData>();
 
-        public void ShowCharacter(string layerName, string characterId, string displayName, Sprite sprite)
+        public void ShowCharacter(string layerName, CharacterSettingData charData, Sprite sprite)
         {
             if (_layers.ContainsKey(layerName))
             {
                 HideLayer(layerName);
             }
 
-            var data = new CharacterLayerData(layerName, characterId, displayName, sprite);
+            var data = new CharacterLayerData(layerName, charData, sprite);
             _layers[layerName] = data;
 
             InvokeEvent(CharacterLayerEventType.Show, data);
@@ -61,19 +60,6 @@ namespace DialogueModule
             }
         }
 
-        public void UpdateLayer(string layerName, Action<CharacterLayerData> updateAction)
-        {
-            if (!_layers.TryGetValue(layerName, out var data))
-            {
-                Debug.LogWarning($"Layer '{layerName}' does not have a character.");
-                return;
-            }
-
-            updateAction?.Invoke(data);
-
-            InvokeEvent(CharacterLayerEventType.Update, data);
-        }
-
         public CharacterLayerData GetLayer(string layerName)
         {
             return _layers.TryGetValue(layerName, out var data) ? data.Clone() : null;
@@ -83,7 +69,7 @@ namespace DialogueModule
         {
             foreach (var layerData in _layers.Values)
             {
-                if (layerData.CharacterId == characterId)
+                if (layerData.SettingData.characterID == characterId)
                     return layerData;
             }
             return null;
