@@ -11,6 +11,7 @@ namespace DialogueModule
         [SerializeField] private GameObject ongoingNextIcon;
         [SerializeField] private GameObject waitNextIcon;
         [SerializeField] private GameObject nameTextRoot;
+        private ScenarioUIAdapter adapter;
         private int visibleCharacterCount = 0;
         private bool isTyping = false;
         private float typeSpeed = 0.5f;
@@ -24,12 +25,14 @@ namespace DialogueModule
         {
             adapter.onPlayText += OnNewText;
             adapter.onSkipTypingText += Skip;
+            this.adapter = adapter;
         }
 
         public void UnbindFromScenario(ScenarioUIAdapter adapter)
         {
             adapter.onPlayText -= OnNewText;
             adapter.onSkipTypingText -= Skip;
+            this.adapter = null;
         }
 
         private void Clear()
@@ -72,6 +75,7 @@ namespace DialogueModule
 
             isTyping = false;
             UpdateIconActiveAndPosition();
+            adapter?.PlayTextEnd();
         }
 
         private void UpdateIconActiveAndPosition()
@@ -112,6 +116,7 @@ namespace DialogueModule
             contentText.maxVisibleCharacters = visibleCharacterCount;
             isTyping = false;
             UpdateIconActiveAndPosition();
+            adapter?.PlayTextEnd();
         }
 
     }

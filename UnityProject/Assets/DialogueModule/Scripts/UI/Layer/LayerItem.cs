@@ -21,7 +21,7 @@ namespace DialogueModule
             {
                 if (!child.TryGetComponent<CharacterObject>(out var obj))
                     continue;
-                if(obj.characterLayerData?.CharacterId == characterId)
+                if(obj.characterLayerData?.SettingData.characterID == characterId)
                 {
                     return obj;
                 }

@@ -23,6 +23,7 @@ namespace DialogueModule
         {
             isPlaying = false;
             StopAllCoroutines();
+            engine.adapter.onNextLine -= OnNextLine;
         }
 
         void End()

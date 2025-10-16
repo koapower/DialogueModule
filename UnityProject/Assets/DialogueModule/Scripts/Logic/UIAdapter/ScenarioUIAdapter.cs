@@ -38,7 +38,10 @@ namespace DialogueModule
             if (controllerStatus == ControllerStatus.TypingText)
                 onSkipTypingText?.Invoke();
             else if (controllerStatus == ControllerStatus.WaitingInput)
+            {
+                controllerStatus = ControllerStatus.None;
                 onNextLine?.Invoke();
+            }
         }
 
         internal void AddSelection(string jumpLabel, string textContent)
