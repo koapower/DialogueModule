@@ -70,5 +70,6 @@ namespace DialogueModule
         {
             return row.GetCell(grid.GetColumnIndex(columnName));
         }
+
     }
 }

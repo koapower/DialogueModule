@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 
 namespace DialogueModule
@@ -26,8 +27,15 @@ namespace DialogueModule
             engine.adapter.onNextLine -= OnNextLine;
         }
 
-        void End()
+        void StartPlaying()
         {
+            isPlaying = true;
+            engine.adapter.StartScenario();
+        }
+
+        void EndPlaying()
+        {
+            engine.adapter.EndScenario();
             isPlaying = false;
             currentLabelData = null;
             engine.scenarioManager.EndScenario();
@@ -45,7 +53,7 @@ namespace DialogueModule
 
         IEnumerator StartScenarioAsync(LabelData labelData)
         {
-            isPlaying = true;
+            StartPlaying();
             yield return new WaitUntil(() => !engine.isLoading);
             currentLabelData = labelData;
             do
@@ -56,7 +64,7 @@ namespace DialogueModule
                 nextLabel = null;
             } while (currentLabelData != null);
 
-            End();
+            EndPlaying();
         }
 
         IEnumerator StartLabelData()

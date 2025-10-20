@@ -10,7 +10,10 @@ namespace DialogueModule
         public event Action<MessageData> onPlayText;
         public event Action onSkipTypingText;
         public event Action onNextLine;
+        public event Action onStartScenario;
+        public event Action onEndScenario;
         public event Action<List<SelectionData>, Action<string>> onShowSelections;
+        public event Action<bool> onSetClickHandler;
         public readonly ObservableValue<string> currentLine = new ObservableValue<string>();
         public readonly CharacterAdapter characterAdapter = new CharacterAdapter();
         private List<SelectionData> selections = new List<SelectionData>();
@@ -44,6 +47,17 @@ namespace DialogueModule
             }
         }
 
+        public void StartScenario()
+        {
+            onStartScenario?.Invoke();
+        }
+
+        public void EndScenario() 
+        {
+            controllerStatus = ControllerStatus.None;
+            onEndScenario?.Invoke();
+        }
+
         internal void AddSelection(string jumpLabel, string textContent)
         {
             selections.Add(new SelectionData()
@@ -58,6 +72,7 @@ namespace DialogueModule
             var list = new List<SelectionData>(selections);
             selections.Clear();
             onShowSelections?.Invoke(list, ChooseSelection);
+            onSetClickHandler?.Invoke(false);
         }
 
         public void ChooseSelection(string jumpLabel)
@@ -70,6 +85,8 @@ namespace DialogueModule
                 return;
             }
             engine.scenarioManager.SetNextLabel(labelData);
+            onSetClickHandler?.Invoke(true);
+            onNextLine?.Invoke();
         }
 
         enum ControllerStatus

@@ -53,7 +53,7 @@ namespace DialogueModule
                     var next = index + 1 >= commandList.Count ? null : commandList[index + 1];
                     if (next is null or not CommandSelection)
                     {
-                        commandList.Add(CommandFactory.Create(CommandID.SelectionEnd.ToStringFast(), null, null));
+                        commandList.Insert(index + 1, CommandFactory.Create(CommandID.SelectionEnd.ToStringFast(), null, null));
                         index++;
                     }
                 }

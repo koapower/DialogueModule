@@ -35,14 +35,17 @@ namespace DialogueModule
                 Sprite sprite = null;
                 if (!string.IsNullOrEmpty(characterSettingData.fileName))
                 {
-                    sprite = Resources.Load<Sprite>(characterSettingData.fileName); //will just use sync process for now
+                    //resource.load doesn't need extension
+                    var searchStr = characterSettingData.fileName.EndsWith(".png") ? characterSettingData.fileName.Substring(0, characterSettingData.fileName.Length - 4) : characterSettingData.fileName;
+                    sprite = Resources.Load<Sprite>(searchStr); //will just use sync process for now
                 }
                 engine.adapter.characterAdapter.ShowCharacter(layerName, characterSettingData, sprite);
             }
 
             if (!string.IsNullOrEmpty(textContent))
             {
-                engine.adapter.PlayText(characterSettingData.displayName, textContent);
+                var parsedText = engine.dataManager.ParseDialogueText(textContent);
+                engine.adapter.PlayText(characterSettingData.displayName, parsedText);
                 isWaiting = true;
             }
         }

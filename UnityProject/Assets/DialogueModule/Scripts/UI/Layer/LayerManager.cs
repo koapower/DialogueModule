@@ -22,12 +22,14 @@ namespace DialogueModule
         public void BindToScenario(ScenarioUIAdapter adapter)
         {
             adapter.onInit += Init;
+            adapter.onEndScenario += OnEndScenario;
             adapter.characterAdapter.OnLayerChanged += OnCharacterLayerEvent;
         }
 
         public void UnbindFromScenario(ScenarioUIAdapter adapter)
         {
             adapter.onInit -= Init;
+            adapter.onEndScenario -= OnEndScenario;
             adapter.characterAdapter.OnLayerChanged -= OnCharacterLayerEvent;
         }
 
@@ -38,7 +40,7 @@ namespace DialogueModule
             layerItems.Add(defaultLayer);
             foreach (var d in layerSettingDatas)
             {
-                var newItem = Instantiate(defaultLayer);
+                var newItem = Instantiate(defaultLayer, defaultLayer.transform.parent);
                 newItem.Init(d);
                 layerItemDict[d.layerName] = newItem;
                 layerItems.Add(newItem);
@@ -67,27 +69,47 @@ namespace DialogueModule
                 case CharacterLayerEventType.Show:
                     if (cObj == null)
                     {
-                        cObj = CreateCharacterObject(e.Data);
-                        cObj.transform.parent = layer.transform;
+                        cObj = CreateCharacterObject(e.Data, layer.transform);
+                        cObj.transform.SetParent(layer.transform);
                     }
                     else
                         cObj.gameObject.SetActive(true);
                     break;
                 case CharacterLayerEventType.Hide:
                     if (cObj != null)
-                        Destroy(cObj);
+                    {
+                        cObj.Reset();
+                        Destroy(cObj.gameObject);
+                    }
                     break;
                 default:
                     break;
             }
         }
 
-        private CharacterObject CreateCharacterObject(CharacterLayerData data)
+        private CharacterObject CreateCharacterObject(CharacterLayerData data, Transform parent)
         {
-            var obj = Instantiate(characterObjectPrefab);
+            var obj = Instantiate(characterObjectPrefab, parent);
             obj.Setup(data);
             obj.gameObject.SetActive(true);
             return obj;
+        }
+
+        private void OnEndScenario()
+        {
+            foreach (var layer in layerItems)
+            {
+                for (int i = layer.transform.childCount - 1; i >= 0; i--)
+                {
+                    var child = layer.transform.GetChild(i);
+                    if (child != characterObjectPrefab.transform)
+                    {
+                        var cObj = child.GetComponent<CharacterObject>();
+                        cObj?.Reset();
+                        Destroy(child.gameObject);
+                    }
+                }
+            }
         }
     }
 }

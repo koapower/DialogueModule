@@ -14,13 +14,30 @@ namespace DialogueModule
 
         private void Awake()
         {
+            SetEngine();
+            BindSelf();
             CacheBindables();
             Bind();
+            engine.uiHasInit = true;
         }
 
         private void OnDestroy()
         {
+            engine.uiHasInit = false;
+            UnbindSelf();
             Unbind();
+        }
+
+        private void BindSelf()
+        {
+            engine.adapter.onStartScenario += OnStartScenario;
+            engine.adapter.onEndScenario += OnEndScenario;
+        }
+
+        private void UnbindSelf()
+        {
+            engine.adapter.onStartScenario -= OnStartScenario;
+            engine.adapter.onEndScenario -= OnEndScenario;
         }
 
         private void CacheBindables()
@@ -60,6 +77,26 @@ namespace DialogueModule
             {
                 bindables?.UnbindFromScenario(engine.adapter);
             }
+        }
+
+        private void OnStartScenario()
+        {
+            gameObject.SetActive(true);
+        }
+
+        private void OnEndScenario()
+        {
+            gameObject.SetActive(false);
+        }
+
+        private void SetEngine()
+        {
+            if(engine == null)
+            {
+                engine = FindFirstObjectByType<DialogueEngine>();
+            }
+            if (engine == null)
+                Debug.LogError("[Dialogue UI] Failed to find Dialogue Engine in the scene!");
         }
     }
 }

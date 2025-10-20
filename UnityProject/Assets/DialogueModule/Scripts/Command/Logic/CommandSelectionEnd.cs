@@ -9,6 +9,7 @@ namespace DialogueModule
         public override void Execute(DialogueEngine engine)
         {
             engine.adapter.ShowSelections();
+            isWaiting = true;
         }
     }
 }

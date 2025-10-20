@@ -12,7 +12,8 @@ namespace DialogueModule
         public override void Execute(DialogueEngine engine)
         {
             engine.adapter.characterAdapter.HideLayer("");
-            engine.adapter.PlayText("", textContent);
+            var parsedText = engine.dataManager.ParseDialogueText(textContent);
+            engine.adapter.PlayText("", parsedText);
             isWaiting = true;
         }
     }

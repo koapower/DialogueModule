@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace DialogueModule
 {
-    class DialogueWindow : MonoBehaviour
+    class DialogueWindow : MonoBehaviour, IScenarioBindable
     {
         [SerializeField] private TextMeshProUGUI nameText;
         [SerializeField] private TextMeshProUGUI contentText;
@@ -14,7 +14,7 @@ namespace DialogueModule
         private ScenarioUIAdapter adapter;
         private int visibleCharacterCount = 0;
         private bool isTyping = false;
-        private float typeSpeed = 0.5f;
+        private float typeWaitTime = 0.01f;
 
         private void Awake()
         {
@@ -70,7 +70,7 @@ namespace DialogueModule
                 visibleCharacterCount++;
                 contentText.maxVisibleCharacters = visibleCharacterCount;
                 UpdateIconActiveAndPosition();
-                yield return new WaitForSeconds(typeSpeed);
+                yield return new WaitForSeconds(typeWaitTime);
             }
 
             isTyping = false;
@@ -81,9 +81,6 @@ namespace DialogueModule
         private void UpdateIconActiveAndPosition()
         {
             if (visibleCharacterCount == 0) return;
-
-            ongoingNextIcon?.SetActive(false);
-            waitNextIcon?.SetActive(false);
 
             contentText.ForceMeshUpdate();
 
@@ -96,9 +93,15 @@ namespace DialogueModule
                 return;
 
             if (isTyping)
+            {
                 ongoingNextIcon?.SetActive(true);
+                waitNextIcon?.SetActive(false);
+            }
             else
+            {
                 waitNextIcon?.SetActive(true);
+                ongoingNextIcon?.SetActive(false);
+            }
 
             Vector3 worldPos = contentText.transform.TransformPoint(charInfo.topRight);
             if (waitNextIcon != null)

@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -11,11 +10,13 @@ namespace DialogueModule
         public void BindToScenario(ScenarioUIAdapter adapter)
         {
             this.adapter = adapter;
+            adapter.onSetClickHandler += SetSelf;
         }
 
         public void UnbindFromScenario(ScenarioUIAdapter adapter)
         {
             this.adapter = null;
+            adapter.onSetClickHandler -= SetSelf;
         }
 
         public void OnPointerClick(PointerEventData eventData)
@@ -23,5 +24,9 @@ namespace DialogueModule
             adapter.OnNext();
         }
 
+        private void SetSelf(bool isOn)
+        {
+            gameObject.SetActive(isOn);
+        }
     }
 }

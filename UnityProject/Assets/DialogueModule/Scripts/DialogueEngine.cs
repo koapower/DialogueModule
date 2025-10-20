@@ -1,6 +1,8 @@
 using System;
+using System.Collections;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace DialogueModule
 {
@@ -11,16 +13,22 @@ namespace DialogueModule
         internal ScenarioManager scenarioManager => GetComponent<ScenarioManager>();
         public ScenarioUIAdapter adapter => GetComponent<ScenarioUIAdapter>();
         public bool isLoading => scenarioManager.isLoading;
+        internal bool uiHasInit { get; set; } = false;
 
         private void Awake()
         {
-            //debug
             Init();
         }
 
         public void Init()
         {
+            StartCoroutine(_Init());
+        }
+
+        private IEnumerator _Init()
+        {
             dataManager.Init();
+            yield return new WaitUntil(() => uiHasInit);
             adapter.Init(PrepareExposedInitData());
         }
 
@@ -39,7 +47,7 @@ namespace DialogueModule
             var layerSettings = dataManager.settingDataManager.layerSettings;
             result.DEFAULT_LAYER_NAME = LayerSettings.DEFAULT_LAYER_NAME;
             result.layerSettingDatas = layerSettings.DataDict.Values.ToList();
-            
+
             return result;
         }
     }

@@ -4,7 +4,7 @@ namespace DialogueModule
 {
     public class LayerSettings
     {
-        public const string DEFAULT_LAYER_NAME = "Default Layer";
+        public const string DEFAULT_LAYER_NAME = "";
         internal IReadOnlyDictionary<string, LayerSettingData> DataDict => dataDict;
         Dictionary<string, LayerSettingData> dataDict = new Dictionary<string, LayerSettingData>();
 

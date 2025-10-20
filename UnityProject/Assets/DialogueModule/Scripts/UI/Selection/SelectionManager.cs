@@ -16,11 +16,13 @@ namespace DialogueModule
 
         public void BindToScenario(ScenarioUIAdapter adapter)
         {
+            adapter.onEndScenario += OnEndScenario;
             adapter.onShowSelections += UpdateItems;
         }
 
         public void UnbindFromScenario(ScenarioUIAdapter adapter)
         {
+            adapter.onEndScenario -= OnEndScenario;
             adapter.onShowSelections -= UpdateItems;
         }
 
@@ -28,7 +30,7 @@ namespace DialogueModule
         {
             foreach (var item in selectionItems)
             {
-                GameObject.Destroy(item);
+                GameObject.Destroy(item.gameObject);
             }
             selectionItems.Clear();
         }
@@ -38,7 +40,8 @@ namespace DialogueModule
             ClearAll();
             foreach (var d in datas)
             {
-                var s = Instantiate(itemPrefab);
+                var s = Instantiate(itemPrefab, itemPrefab.transform.parent);
+                s.gameObject.SetActive(true);
                 s.content.text = d.textContent;
                 s.btn.onClick.RemoveAllListeners();
                 s.btn.onClick.AddListener(() =>
@@ -51,6 +54,9 @@ namespace DialogueModule
             }
         }
 
-        
+        private void OnEndScenario()
+        {
+            ClearAll();
+        }
     }
 }

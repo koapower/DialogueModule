@@ -9,11 +9,13 @@ namespace DialogueModule
         [SerializeField] private ScenarioBook scenarioBook;
 
         internal SettingDataManager settingDataManager = new SettingDataManager();
+        DialogueTagParser dialogueTagParser = new DialogueTagParser();
         Dictionary<string, ScenarioData> scenarioDataDict = new Dictionary<string, ScenarioData>();
 
         public void Init()
         {
             settingDataManager.Init(settingsBook);
+            dialogueTagParser.Init();
             InitScenarios();
         }
 
@@ -40,5 +42,9 @@ namespace DialogueModule
             return null;
         }
 
+        public string ParseDialogueText(string content)
+        {
+            return dialogueTagParser.Parse(this, content);
+        }
     }
 }
