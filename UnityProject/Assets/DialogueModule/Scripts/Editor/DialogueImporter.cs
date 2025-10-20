@@ -65,7 +65,9 @@ namespace DialogueModule
                                         allLayers.Add(key, grid);
                                         break;
                                     default:
-                                        allScenarios.Add(key, grid);
+                                        var headerRow = grid.GetHeaderRow();
+                                        if (headerRow != null && !headerRow.IsEmpty && !headerRow.IsCommentOut && headerRow.CheckIsScenarioHeaderRow())
+                                            allScenarios.Add(key, grid);
                                         break;
                                 }
                                 successFiles++;

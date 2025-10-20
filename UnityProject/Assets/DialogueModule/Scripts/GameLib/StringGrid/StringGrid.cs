@@ -50,7 +50,7 @@ namespace DialogueModule
 
         public StringGridRow GetHeaderRow()
         {
-            var row = rows[0];
+            var row = GetRow(0);
             return row;
         }
 

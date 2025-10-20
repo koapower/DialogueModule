@@ -45,6 +45,12 @@ namespace DialogueModule
             return strings != null && strings.Length > 0 && strings[0].StartsWith("//");
         }
 
+        public bool CheckIsScenarioHeaderRow()
+        {
+            var str = ToString();
+            return str.Contains("Command") && str.Contains("Arg1") && str.Contains("Text");
+        }
+
         public override string ToString()
         {
             return string.Join(",", strings);
