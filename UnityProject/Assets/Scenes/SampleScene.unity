@@ -526,6 +526,14 @@ PrefabInstance:
       propertyPath: engine
       value: 
       objectReference: {fileID: 69108913}
+    - target: {fileID: 3461725630164161992, guid: 21a579304b78fd8429ebd771d6bc39f7, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+    - target: {fileID: 3461725630164161992, guid: 21a579304b78fd8429ebd771d6bc39f7, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
     - target: {fileID: 7997591830359410399, guid: 21a579304b78fd8429ebd771d6bc39f7, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

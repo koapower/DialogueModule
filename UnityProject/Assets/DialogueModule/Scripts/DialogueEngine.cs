@@ -9,23 +9,33 @@ namespace DialogueModule
     [AddComponentMenu("Dialogue Module/Dialogue Engine")]
     public class DialogueEngine : MonoBehaviour
     {
+        public event Action OnEngineDestroy;
         internal DataManager dataManager => GetComponent<DataManager>();
         internal ScenarioManager scenarioManager => GetComponent<ScenarioManager>();
         public ScenarioUIAdapter adapter => GetComponent<ScenarioUIAdapter>();
+        public IDialogueAssetManager assetManager = new AssetManager();
         public bool isLoading => scenarioManager.isLoading;
         internal bool uiHasInit { get; set; } = false;
+        private bool _isInited = false;
 
-        private void Awake()
+        protected void Awake()
         {
             Init();
         }
 
+        protected void OnDestroy()
+        {
+            OnEngineDestroy?.Invoke();
+        }
+
         public void Init()
         {
+            if (_isInited) return;
+            _isInited = true;
             StartCoroutine(_Init());
         }
 
-        private IEnumerator _Init()
+        protected IEnumerator _Init()
         {
             dataManager.Init();
             yield return new WaitUntil(() => uiHasInit);

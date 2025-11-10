@@ -371,7 +371,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 893, y: 1357}
+  m_SizeDelta: {x: 1370, y: 1370}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6059418693989101688
 CanvasRenderer:
@@ -401,7 +401,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 9163658178806779479, guid: 5aab73a65df313542a28b91aca50671d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c1759c643bc25534a8a921689da1a5a5, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -545,6 +545,11 @@ MonoBehaviour:
   - {fileID: 4717585417407594194}
   - {fileID: 2060992483025504788}
   engine: {fileID: 0}
+  layersToDim: []
+  dialogueOpacity: 0
+  disableInteractionDuringDialogue: 1
+  disableRaycastsDuringDialogue: 1
+  fadeDuration: 0.25
 --- !u!1 &2529957786793287653
 GameObject:
   m_ObjectHideFlags: 0
@@ -690,6 +695,8 @@ MonoBehaviour:
   ongoingNextIcon: {fileID: 1043793773083072168}
   waitNextIcon: {fileID: 6868113513300211516}
   nameTextRoot: {fileID: 8313279412587103833}
+  voiceAudioSource: {fileID: 0}
+  nameCardBackground: {fileID: 0}
 --- !u!1 &3651465123486865781
 GameObject:
   m_ObjectHideFlags: 0
@@ -1239,10 +1246,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: AMOFGUSSAMOFGUSSAMOFGUSSAMOFGUSSAMOFGUSSAMOFGUSSAMOFGUSSAMOFGUSSAMOFGUSSAMOFGUSSAMOFGUSSAMOFGUSSAMOFGUSSAMOFGUSSAMOFGUSSAMOFGUSSAMOFGUSSAMOFGUSSAMOFGUSSAMOFGUSSAMOFGUSSAMOFGUSSAMOFGUSSAMOFGUSSAMOFGUSSAMOFGUSS
+  m_text: You haven't explained anything yet! How did I die? Who even am I? Why can't
+    I remember?
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: 79459efec17a4d00a321bdcc27bbc385, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1266,8 +1274,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 32
-  m_fontSizeBase: 32
+  m_fontSize: 55
+  m_fontSizeBase: 45
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1278,7 +1286,7 @@ MonoBehaviour:
   m_textAlignment: 65535
   m_characterSpacing: 4
   m_wordSpacing: 0
-  m_lineSpacing: 36
+  m_lineSpacing: 12
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
@@ -1343,9 +1351,9 @@ RectTransform:
   - {fileID: 2008662425323713653}
   m_Father: {fileID: 2751388900891193208}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -572, y: 135}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 168, y: 135}
   m_SizeDelta: {x: 372.5569, y: 87.5065}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3832700297193837612

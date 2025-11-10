@@ -13,12 +13,6 @@ namespace DialogueModule
         private Dictionary<string, LayerItem> layerItemDict = new Dictionary<string, LayerItem>(); // doesn't include bg layer
         private List<LayerItem> layerItems = new List<LayerItem>();
 
-        private void Awake()
-        {
-            characterObjectPrefab.gameObject.SetActive(false);
-            bgImage.gameObject.SetActive(false); // Not supporting bg for now
-        }
-
         public void BindToScenario(ScenarioUIAdapter adapter)
         {
             adapter.onInit += Init;
@@ -35,6 +29,9 @@ namespace DialogueModule
 
         public void Init(InitData initData)
         {
+            characterObjectPrefab.gameObject.SetActive(false);
+            bgImage.gameObject.SetActive(false); // Not supporting bg for now
+
             var layerSettingDatas = initData.layerSettingDatas;
             layerItemDict[LayerSettings.DEFAULT_LAYER_NAME] = defaultLayer;
             layerItems.Add(defaultLayer);

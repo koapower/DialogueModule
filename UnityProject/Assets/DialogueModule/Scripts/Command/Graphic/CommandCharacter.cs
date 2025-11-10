@@ -35,9 +35,10 @@ namespace DialogueModule
                 Sprite sprite = null;
                 if (!string.IsNullOrEmpty(characterSettingData.fileName))
                 {
-                    //resource.load doesn't need extension
-                    var searchStr = characterSettingData.fileName.EndsWith(".png") ? characterSettingData.fileName.Substring(0, characterSettingData.fileName.Length - 4) : characterSettingData.fileName;
-                    sprite = Resources.Load<Sprite>(searchStr); //will just use sync process for now
+                    if (engine.assetManager.CurrentUsingAssetDict.TryGetValue(characterSettingData.fileName, out var obj))
+                        sprite = obj as Sprite;
+                    else
+                        Debug.LogError($"Cannot find character sprite in assetmanager! fileName: {characterSettingData.fileName}, characterID {characterId}");
                 }
                 engine.adapter.characterAdapter.ShowCharacter(layerName, characterSettingData, sprite);
             }
@@ -45,7 +46,20 @@ namespace DialogueModule
             if (!string.IsNullOrEmpty(textContent))
             {
                 var parsedText = engine.dataManager.ParseDialogueText(textContent);
-                engine.adapter.PlayText(characterSettingData.displayName, parsedText);
+                AudioClip voiceClip = null;
+                if (!string.IsNullOrEmpty(characterSettingData.voiceFileName))
+                {
+                    if (engine.assetManager.CurrentUsingAssetDict.TryGetValue(characterSettingData.voiceFileName, out var audioObj))
+                        voiceClip = audioObj as AudioClip;
+                    else
+                        Debug.LogError($"Cannot find character voice clip in assetmanager! fileName: {characterSettingData.voiceFileName}, characterID {characterId}");
+                }
+
+                engine.adapter.PlayText(
+                    characterSettingData.displayName,
+                    parsedText,
+                    voiceClip,
+                    characterSettingData.voiceSpeedMultiplier <= 0f ? 1f : characterSettingData.voiceSpeedMultiplier);
                 isWaiting = true;
             }
         }
