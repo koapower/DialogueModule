@@ -36,16 +36,13 @@ namespace DialogueModule
             public bool enabled;
         }
 
-        protected void Awake()
+        protected virtual void Awake()
         {
             Init();
         }
 
-        protected void OnDestroy()
-        {
-            engine.uiHasInit = false;
-            UnbindSelf();
-            Unbind();
+        protected virtual void OnDestroy()
+        {            
             ForceRestoreLayerStates();
         }
 
@@ -61,18 +58,25 @@ namespace DialogueModule
             engine.uiHasInit = true;
         }
 
+        private void UnbindFromEngine()
+        {
+            engine.uiHasInit = false;
+            UnbindSelf();
+            Unbind();
+        }
+
         private void BindSelf()
         {
             engine.adapter.onStartScenario += OnStartScenario;
             engine.adapter.onEndScenario += OnEndScenario;
-            engine.OnEngineDestroy += UnbindSelf;
+            engine.OnEngineDestroy += UnbindFromEngine;
         }
 
         private void UnbindSelf()
         {
             engine.adapter.onStartScenario -= OnStartScenario;
             engine.adapter.onEndScenario -= OnEndScenario;
-            engine.OnEngineDestroy -= UnbindSelf;
+            engine.OnEngineDestroy -= UnbindFromEngine;
         }
 
         private void CacheBindables()
