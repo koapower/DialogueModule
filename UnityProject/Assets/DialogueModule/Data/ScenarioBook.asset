@@ -276,3 +276,88 @@ MonoBehaviour:
         - End of story test 3.
       - strings:
         - EndScenario
+      - strings:
+        - 
+      - strings:
+        - '*story_test4'
+      - strings:
+        - 
+        - 
+        - 
+        - 
+        - 
+        - 
+        - 
+        - 'This label tests the features added in the grant-and-display-polish branch:
+          CommandGrant, the typewriter speed tag, and the fx/sfx triggers.'
+      - strings:
+        - Grant
+        - item
+        - potion_001
+        - 2
+        - 
+        - 
+        - 
+        - 
+      - strings:
+        - 
+        - 
+        - 
+        - 
+        - 
+        - 
+        - 
+        - That Grant row above should print [PrologueGrantBuffer-style] item potion_001
+          x2 to the Console via onGrantRequested (this scene logs it for you, no
+          host-project bridge needed).
+      - strings:
+        - Grant
+        - gold
+        - 
+        - 50
+        - 
+        - 
+        - 
+        - 
+      - strings:
+        - 
+        - 
+        - 
+        - 
+        - 
+        - 
+        - 
+        - And that one granted 50 gold the same way.
+      - strings:
+        - 
+        - 
+        - 
+        - 
+        - 
+        - 
+        - 
+        - 'Now watch the typing speed change mid-line: this part types normally,
+          then<speed=0.25>this part should type noticeably slower,<speed=0.01>and
+          this part should snap back fast.'
+      - strings:
+        - 
+        - 
+        - 
+        - 
+        - 
+        - 
+        - 
+        - "Next, a flashback-style fx trigger:<fx=flashback_white>(fx fired right
+          there \u2014 check the Console for [fx] flashback_white)"
+      - strings:
+        - 
+        - 
+        - 
+        - 
+        - 
+        - 
+        - 
+        - "And a sfx trigger:<sfx=heartbeat>(sfx fired right there \u2014 check the
+          Console for [sfx] heartbeat)"
+      - strings:
+        - EndScenario

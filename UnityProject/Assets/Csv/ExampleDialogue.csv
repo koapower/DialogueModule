@@ -38,3 +38,14 @@ Jump,*story_test3_end
 *story_test3_end
 ,,,,,,,End of story test 3.
 EndScenario
+
+*story_test4
+,,,,,,,"This label tests the features added in the grant-and-display-polish branch: CommandGrant, the typewriter speed tag, and the fx/sfx triggers."
+Grant,item,potion_001,2,,,,
+,,,,,,,"That Grant row above should print [PrologueGrantBuffer-style] item potion_001 x2 to the Console via onGrantRequested (this scene logs it for you, no host-project bridge needed)."
+Grant,gold,,50,,,,
+,,,,,,,"And that one granted 50 gold the same way."
+,,,,,,,"Now watch the typing speed change mid-line: this part types normally, then<speed=0.25>this part should type noticeably slower,<speed=0.01>and this part should snap back fast."
+,,,,,,,"Next, a flashback-style fx trigger:<fx=flashback_white>(fx fired right there — check the Console for [fx] flashback_white)"
+,,,,,,,"And a sfx trigger:<sfx=heartbeat>(sfx fired right there — check the Console for [sfx] heartbeat)"
+EndScenario
