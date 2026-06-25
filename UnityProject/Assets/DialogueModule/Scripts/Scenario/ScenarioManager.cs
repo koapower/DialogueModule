@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace DialogueModule
 {
-    public class ScenarioManager : MonoBehaviour
+    class ScenarioManager : MonoBehaviour
     {
         public event Action onBeginScenario;
         public event Action onEndScenario;

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace DialogueModule
 {
-    public class DataManager : MonoBehaviour
+    class DataManager : MonoBehaviour
     {
         [SerializeField] private SettingsBook settingsBook;
         [SerializeField] private ScenarioBook scenarioBook;

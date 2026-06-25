@@ -1,6 +1,6 @@
 namespace DialogueModule
 {
-    public class CommandGrant : CommandBase
+    class CommandGrant : CommandBase
     {
         public string GrantType { get; }
         public string GrantId { get; }
