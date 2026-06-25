@@ -7,7 +7,7 @@ namespace DialogueModule
     {
         private static readonly Dictionary<string, Func<GridInfo, StringGridRow, CommandBase>> _factoryMap = new();
 
-        static CommandFactory() 
+        static CommandFactory()
         {
             Register(CommandID.Character.ToStringFast(), (grid, row) => new CommandCharacter(grid, row));
             Register(CommandID.CharacterOff.ToStringFast(), (grid, row) => new CommandCharacterOff(grid, row));
@@ -18,6 +18,7 @@ namespace DialogueModule
             Register(CommandID.Jump.ToStringFast(), (grid, row) => new CommandJump(grid, row));
             Register(CommandID.EndScenario.ToStringFast(), (grid, row) => new CommandEndScenario(grid, row));
             Register(CommandID.ScenarioLabel.ToStringFast(), (grid, row) => new CommandScenarioLabel(grid, row));
+            Register(CommandID.Grant.ToStringFast(), (grid, row) => new CommandGrant(grid, row));
         }
 
         public static void Register(string id, Func<GridInfo, StringGridRow, CommandBase> creator)

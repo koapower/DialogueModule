@@ -14,6 +14,7 @@ namespace DialogueModule
         public event Action onEndScenario;
         public event Action<List<SelectionData>, Action<string>> onShowSelections;
         public event Action<bool> onSetClickHandler;
+        public event Action<string, string, int> onGrantRequested;
         public readonly ObservableValue<string> currentLine = new ObservableValue<string>();
         public readonly CharacterAdapter characterAdapter = new CharacterAdapter();
         private List<SelectionData> selections = new List<SelectionData>();
@@ -71,6 +72,11 @@ namespace DialogueModule
                 jumpLabel = jumpLabel,
                 textContent = textContent
             });
+        }
+
+        internal void RequestGrant(string type, string id, int quantity)
+        {
+            onGrantRequested?.Invoke(type, id, quantity);
         }
 
         public void ShowSelections()

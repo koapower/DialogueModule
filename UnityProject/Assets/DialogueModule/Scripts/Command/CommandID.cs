@@ -12,5 +12,6 @@ namespace DialogueModule
         Jump,
         EndScenario,
         ScenarioLabel,
+        Grant,
     }
 }
