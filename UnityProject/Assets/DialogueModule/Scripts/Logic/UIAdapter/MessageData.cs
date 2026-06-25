@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace DialogueModule
@@ -10,5 +11,6 @@ namespace DialogueModule
         public float voiceSpeedMultiplier;
         public bool hasNameCardColor;
         public Color nameCardColor;
+        public List<InlineMarker> markers;
     }
 }

@@ -12,8 +12,9 @@ namespace DialogueModule
         public override void Execute(DialogueEngine engine)
         {
             engine.adapter.characterAdapter.HideLayer("");
-            var parsedText = engine.dataManager.ParseDialogueText(textContent);
-            engine.adapter.PlayText("", parsedText, null, 1f);
+            var tagParsedText = engine.dataManager.ParseDialogueText(textContent);
+            var cleanText = InlineMarkerParser.Parse(tagParsedText, out var markers);
+            engine.adapter.PlayText("", cleanText, null, 1f, markers);
             isWaiting = true;
         }
     }

@@ -15,6 +15,8 @@ namespace DialogueModule
         public event Action<List<SelectionData>, Action<string>> onShowSelections;
         public event Action<bool> onSetClickHandler;
         public event Action<string, string, int> onGrantRequested;
+        public event Action<string> onEffectTriggered;
+        public event Action<string> onSfxTriggered;
         public readonly ObservableValue<string> currentLine = new ObservableValue<string>();
         public readonly CharacterAdapter characterAdapter = new CharacterAdapter();
         private List<SelectionData> selections = new List<SelectionData>();
@@ -26,6 +28,9 @@ namespace DialogueModule
         }
 
         public void PlayText(string characterDisplayName, string fullText, AudioClip voiceClip, float voiceSpeedMultiplier)
+            => PlayText(characterDisplayName, fullText, voiceClip, voiceSpeedMultiplier, null);
+
+        public void PlayText(string characterDisplayName, string fullText, AudioClip voiceClip, float voiceSpeedMultiplier, List<InlineMarker> markers)
         {
             currentLine.Value = fullText;
             controllerStatus = ControllerStatus.TypingText;
@@ -35,8 +40,12 @@ namespace DialogueModule
                 message = fullText,
                 voiceClip = voiceClip,
                 voiceSpeedMultiplier = voiceSpeedMultiplier,
+                markers = markers,
             });
         }
+
+        internal void TriggerEffect(string fxId) => onEffectTriggered?.Invoke(fxId);
+        internal void TriggerSfx(string sfxId) => onSfxTriggered?.Invoke(sfxId);
 
         public void PlayTextEnd()
         {

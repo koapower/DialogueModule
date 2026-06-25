@@ -27,6 +27,8 @@ namespace DialogueModule
         private float voicePlaybackCooldown = 0f;
         private bool hasPendingMessage = false;
         private MessageData pendingMessage;
+        private System.Collections.Generic.List<InlineMarker> currentMarkers;
+        private int nextMarkerIndex = 0;
 
         private void Awake()
         {
@@ -78,6 +80,8 @@ namespace DialogueModule
             currentVoiceSpeed = 1f;
             currentVoiceClip = null;
             voicePlaybackCooldown = 0f;
+            currentMarkers = null;
+            nextMarkerIndex = 0;
         }
 
         private void OnNewText(MessageData data)
@@ -130,6 +134,9 @@ namespace DialogueModule
             }
 
             typeWaitTime = Mathf.Max(typeWaitTime, MinClipWaitTime);
+
+            currentMarkers = data.markers;
+            nextMarkerIndex = 0;
 
             StopAllCoroutines();
             StartCoroutine(TypeRoutine());
@@ -186,6 +193,7 @@ namespace DialogueModule
                     contentText.maxVisibleCharacters = visibleCharacterCount;
                     UpdateIconActiveAndPosition();
                     TryPlayVoiceTick(visibleCharacterCount - 1);
+                    ApplyDueMarkers();
                 }
 
                 yield return null;
@@ -214,6 +222,31 @@ namespace DialogueModule
             voiceAudioSource.pitch = currentVoiceSpeed;
             voiceAudioSource.PlayOneShot(currentVoiceClip);
             voicePlaybackCooldown = GetVoicePlaybackInterval(currentVoiceClip, currentVoiceSpeed);
+        }
+
+        private void ApplyDueMarkers()
+        {
+            if (currentMarkers == null)
+                return;
+
+            while (nextMarkerIndex < currentMarkers.Count && currentMarkers[nextMarkerIndex].charIndex <= visibleCharacterCount)
+            {
+                var marker = currentMarkers[nextMarkerIndex];
+                switch (marker.kind)
+                {
+                    case MarkerKind.Speed:
+                        if (float.TryParse(marker.value, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out var seconds))
+                            typeWaitTime = Mathf.Max(seconds, MinTypeWaitTime);
+                        break;
+                    case MarkerKind.Fx:
+                        adapter?.TriggerEffect(marker.value);
+                        break;
+                    case MarkerKind.Sfx:
+                        adapter?.TriggerSfx(marker.value);
+                        break;
+                }
+                nextMarkerIndex++;
+            }
         }
 
         private void UpdateIconActiveAndPosition()

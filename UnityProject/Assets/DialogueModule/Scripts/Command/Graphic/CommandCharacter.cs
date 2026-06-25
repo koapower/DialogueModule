@@ -45,7 +45,8 @@ namespace DialogueModule
 
             if (!string.IsNullOrEmpty(textContent))
             {
-                var parsedText = engine.dataManager.ParseDialogueText(textContent);
+                var tagParsedText = engine.dataManager.ParseDialogueText(textContent);
+                var cleanText = InlineMarkerParser.Parse(tagParsedText, out var markers);
                 AudioClip voiceClip = null;
                 if (!string.IsNullOrEmpty(characterSettingData.voiceFileName))
                 {
@@ -57,9 +58,10 @@ namespace DialogueModule
 
                 engine.adapter.PlayText(
                     characterSettingData.displayName,
-                    parsedText,
+                    cleanText,
                     voiceClip,
-                    characterSettingData.voiceSpeedMultiplier <= 0f ? 1f : characterSettingData.voiceSpeedMultiplier);
+                    characterSettingData.voiceSpeedMultiplier <= 0f ? 1f : characterSettingData.voiceSpeedMultiplier,
+                    markers);
                 isWaiting = true;
             }
         }
